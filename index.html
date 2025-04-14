@@ -179,18 +179,18 @@
 
     <script>
         document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting the traditional way
+            event.preventDefault(); // mencegah form submitting dengan cara traditional
 
-            // Get form values
+            // form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
 
-            // Display a response message
+            // menampilkan pesan response
             const responseDiv = document.getElementById('formResponse');
             responseDiv.innerHTML = `<p>Terima kasih, ${name}! Pesan Anda telah diterima.</p>`;
             
-            // Clear the form
+            // Clear form
             this.reset();
         });
     </script>
