@@ -76,6 +76,14 @@
             border: none;
             cursor: pointer;
         }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -127,27 +135,64 @@
             <small>Source: Wikipedia</small>
             <p>Joan of Arc, pahlawan nasional Prancis, memimpin pasukan Prancis melawan Inggris selama Perang Seratus Tahun...</p>
         </div>
+
+        <div class="blog-post">
+            <h3><a href="#">Teknologi AI dalam Kehidupan Sehari-hari</a></h3>
+            <small>Source: Blog Teknologi</small>
+            <p>Teknologi kecerdasan buatan (AI) semakin banyak digunakan dalam berbagai aspek kehidupan sehari-hari, mulai dari asisten virtual hingga analisis data besar...</p>
+        </div>
+
+        <div class="blog-post">
+            <h3><a href="#">Seni Digital: Mengubah Cara Kita Berkreasi</a></h3>
+            <small>Source: Blog Seni</small>
+            <p>Seni digital telah merevolusi cara seniman berkreasi, memungkinkan mereka untuk mengeksplorasi ide-ide baru dan teknik yang sebelumnya tidak mungkin dilakukan...</p>
+        </div>
+
+        <div class="blog-post">
+            <h3><a href="#">Olahraga dan Kesehatan: Pentingnya Aktivitas Fisik</a></h3>
+            <small>Source: Blog Kesehatan</small>
+            <p>Aktivitas fisik sangat penting untuk menjaga kesehatan tubuh dan pikiran. Dalam artikel ini, kita akan membahas berbagai manfaat olahraga...</p>
+        </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="container">
         <h2>Hubungi Kami</h2>
-        <form>
+        <form id="contactForm">
             <label>Nama:</label>
-            <input type="text" required>
+            <input type="text" id="name" required>
             
             <label>Email:</label>
-            <input type="email" required>
+            <input type="email" id="email" required>
             
             <label>Pesan:</label>
-            <textarea rows="5" required></textarea>
+            <textarea id="message" rows="5" required></textarea>
             
             <button type="submit">Kirim Pesan</button>
         </form>
+        <div id="formResponse" style="margin-top: 1rem;"></div>
     </section>
 
-    <footer style="background-color: #333; color: white; text-align: center; padding: 1rem; margin-top: 2rem;">
+    <footer>
         <p>&copy; 2024 Website Sederhana. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Display a response message
+            const responseDiv = document.getElementById('formResponse');
+            responseDiv.innerHTML = `<p>Terima kasih, ${name}! Pesan Anda telah diterima.</p>`;
+            
+            // Clear the form
+            this.reset();
+        });
+    </script>
 </body>
 </html>
