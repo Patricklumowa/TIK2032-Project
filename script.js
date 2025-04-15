@@ -21,17 +21,17 @@ document.getElementById("contactForm").addEventListener("submit", function (even
   }, 5000)
 })
 
-// Optimized cursor effect
-const cursorDot = document.querySelector(".cursor-dot")
-const cursorOutline = document.querySelector(".cursor-outline")
+// Optimized cursor effect with star and crosshair
+const cursorCrosshair = document.querySelector(".cursor-crosshair")
+const cursorStar = document.querySelector(".cursor-star")
 
 // Variables to store the current and target positions
 let cursorX = 0
 let cursorY = 0
-let dotX = 0
-let dotY = 0
-let outlineX = 0
-let outlineY = 0
+let crosshairX = 0
+let crosshairY = 0
+let starX = 0
+let starY = 0
 
 // Update cursor position on mousemove
 document.addEventListener("mousemove", (e) => {
@@ -42,20 +42,20 @@ document.addEventListener("mousemove", (e) => {
 // Animation function using requestAnimationFrame for smooth performance
 function animateCursor() {
   // Calculate the distance between current position and target position
-  const dotDiffX = cursorX - dotX
-  const dotDiffY = cursorY - dotY
-  const outlineDiffX = cursorX - outlineX
-  const outlineDiffY = cursorY - outlineY
+  const crosshairDiffX = cursorX - crosshairX
+  const crosshairDiffY = cursorY - crosshairY
+  const starDiffX = cursorX - starX
+  const starDiffY = cursorY - starY
 
   // Update positions with easing
-  dotX += dotDiffX * 0.2
-  dotY += dotDiffY * 0.2
-  outlineX += outlineDiffX * 0.15
-  outlineY += outlineDiffY * 0.15
+  crosshairX += crosshairDiffX * 0.2
+  crosshairY += crosshairDiffY * 0.2
+  starX += starDiffX * 0.15
+  starY += starDiffY * 0.15
 
   // Apply the new positions
-  cursorDot.style.transform = `translate(${dotX}px, ${dotY}px)`
-  cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px)`
+  cursorCrosshair.style.transform = `translate(${crosshairX}px, ${crosshairY}px)`
+  cursorStar.style.transform = `translate(${starX}px, ${starY}px)`
 
   // Continue the animation loop
   requestAnimationFrame(animateCursor)
@@ -69,42 +69,40 @@ const interactiveElements = document.querySelectorAll("a, button, input, textare
 
 interactiveElements.forEach((el) => {
   el.addEventListener("mouseenter", () => {
-    cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(1.5)`
-    cursorOutline.style.borderColor = "var(--secondary-color)"
-    cursorOutline.style.boxShadow = "var(--neon-glow-purple)"
-    cursorDot.style.opacity = "0.5"
+    cursorStar.style.transform = `translate(${starX}px, ${starY}px) scale(1.5) rotate(45deg)`
+    cursorStar.style.filter = "drop-shadow(0 0 10px rgba(255, 0, 255, 0.8))"
+    cursorCrosshair.style.opacity = "0.5"
   })
 
   el.addEventListener("mouseleave", () => {
-    cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(1)`
-    cursorOutline.style.borderColor = "var(--primary-color)"
-    cursorOutline.style.boxShadow = "var(--neon-glow)"
-    cursorDot.style.opacity = "1"
+    cursorStar.style.transform = `translate(${starX}px, ${starY}px) scale(1) rotate(0deg)`
+    cursorStar.style.filter = "drop-shadow(0 0 5px rgba(0, 255, 255, 0.5))"
+    cursorCrosshair.style.opacity = "1"
   })
 })
 
 // Hide cursor when mouse leaves the window
 document.addEventListener("mouseout", (e) => {
   if (e.relatedTarget === null) {
-    cursorDot.style.opacity = "0"
-    cursorOutline.style.opacity = "0"
+    cursorCrosshair.style.opacity = "0"
+    cursorStar.style.opacity = "0"
   }
 })
 
 document.addEventListener("mouseover", () => {
-  cursorDot.style.opacity = "1"
-  cursorOutline.style.opacity = "1"
+  cursorCrosshair.style.opacity = "1"
+  cursorStar.style.opacity = "1"
 })
 
 // Click effect
 document.addEventListener("mousedown", () => {
-  cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) scale(0.7)`
-  cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(0.7)`
+  cursorCrosshair.style.transform = `translate(${crosshairX}px, ${crosshairY}px) scale(0.7)`
+  cursorStar.style.transform = `translate(${starX}px, ${starY}px) scale(0.7) rotate(180deg)`
 })
 
 document.addEventListener("mouseup", () => {
-  cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) scale(1)`
-  cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(1)`
+  cursorCrosshair.style.transform = `translate(${crosshairX}px, ${crosshairY}px) scale(1)`
+  cursorStar.style.transform = `translate(${starX}px, ${starY}px) scale(1) rotate(0deg)`
 })
 
 // Scroll handling for sections
