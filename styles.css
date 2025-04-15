@@ -90,3 +90,14 @@ footer {
     transition: transform 0.2s, opacity 0.2s;
     opacity: 0;
 }
+.cursor-effect {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 0, 0, 0.5); /* Red color with transparency */
+    border-radius: 50%; /* Circular shape */
+    pointer-events: none; /* Prevents the cursor effect from interfering with other elements */
+    transform: translate(-50%, -50%); /* Center the effect on the cursor */
+    transition: transform 0.2s, opacity 0.2s; /* Smooth transition for scaling and opacity */
+    opacity: 0; /* Start as invisible */
+}
