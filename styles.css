@@ -6,7 +6,7 @@
   --dark-bg: #070711;
   --text-color: #fff;
   --dark-text: #888;
-  --box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+  --box_shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
   --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --neon-glow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.3), 0 0 30px rgba(0, 255, 255, 0.1);
   --neon-glow-purple: 0 0 10px rgba(255, 0, 255, 0.5), 0 0 20px rgba(255, 0, 255, 0.3), 0 0 30px rgba(255, 0, 255, 0.1);
@@ -497,37 +497,68 @@ nav a.active:after {
 }
 
 /* Bullet Hit Effect */
-.bullet-hit {
-  position: absolute;
+#bullet-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  width: 30px;
-  height: 30px;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='none'%3E%3Ccircle cx='15' cy='15' r='2' fill='%23FFFFFF'/%3E%3Cpath d='M15 5V10M15 20V25M5 15H10M20 15H25M7 7L10 10M20 20L23 23M7 23L10 20M20 10L23 7' stroke='%2300FFFF' stroke-width='2'/%3E%3C/svg%3E");
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  animation: bulletHit 0.5s ease-out forwards;
+  z-index: 9998;
 }
 
-@keyframes bulletHit {
+.bullet-hit {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.bullet-hit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px 2px var(--primary-color), 0 0 20px 5px var(--secondary-color);
+}
+
+.bullet-hit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, transparent 10px, rgba(0, 255, 255, 0.5) 10px, transparent 15px),
+    radial-gradient(circle, transparent 5px, rgba(255, 0, 255, 0.5) 5px, transparent 15px);
+  transform: translate(-50%, -50%);
+  animation: bulletExpand 0.5s ease-out forwards;
+}
+
+@keyframes bulletExpand {
   0% {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.2);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 1;
+    opacity: 0.8;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
   }
 }
 
 /* Update scroll-down positioning */
 .scroll-down {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -537,6 +568,16 @@ nav a.active:after {
   font-size: 0.9rem;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
   z-index: 10;
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
@@ -592,7 +633,7 @@ nav a.active:after {
 .gallery-item {
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box_shadow);
   transition: var(--transition);
   position: relative;
   border: 1px solid var(--primary-color);
@@ -641,7 +682,7 @@ nav a.active:after {
   background: rgba(10, 10, 18, 0.7);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box_shadow);
   transition: var(--transition);
   position: relative;
   border: 1px solid var(--primary-color);
@@ -704,7 +745,7 @@ nav a.active:after {
   padding: 2rem;
   border-radius: 10px;
   border: 1px solid var(--primary-color);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box_shadow);
 }
 
 .form-group {
