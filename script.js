@@ -94,16 +94,36 @@ document.addEventListener("mouseover", () => {
   cursorStar.style.opacity = "1"
 })
 
-// Bullet hit effect on click
+// Replace the bullet hit effect code with this more robust implementation
 document.addEventListener("click", (e) => {
   // Check if the click is on a blank space (not on interactive elements)
   if (!e.target.closest("a, button, input, textarea, .gallery-item, .progress-dot, .nav-links, .logo")) {
     // Create bullet hit element
     const bulletHit = document.createElement("div")
     bulletHit.classList.add("bullet-hit")
-    bulletHit.style.left = `${e.clientX}px`
-    bulletHit.style.top = `${e.clientY}px`
-    document.body.appendChild(bulletHit)
+
+    // Position it at the click coordinates
+    bulletHit.style.left = e.clientX + "px"
+    bulletHit.style.top = e.clientY + "px"
+
+    // Add to container
+    document.getElementById("bullet-container").appendChild(bulletHit)
+
+    // Create additional rays for more dramatic effect
+    for (let i = 0; i < 8; i++) {
+      const ray = document.createElement("div")
+      ray.classList.add("bullet-ray")
+      ray.style.position = "absolute"
+      ray.style.width = "2px"
+      ray.style.height = Math.random() * 15 + 10 + "px"
+      ray.style.background = i % 2 === 0 ? "var(--primary-color)" : "var(--secondary-color)"
+      ray.style.top = "50%"
+      ray.style.left = "50%"
+      ray.style.transformOrigin = "0 0"
+      ray.style.transform = `rotate(${i * 45}deg)`
+      ray.style.animation = "rayFade 0.4s forwards"
+      bulletHit.appendChild(ray)
+    }
 
     // Remove the element after animation completes
     setTimeout(() => {
@@ -111,6 +131,16 @@ document.addEventListener("click", (e) => {
     }, 500)
   }
 })
+
+// Add this style for the rays
+const style = document.createElement("style")
+style.textContent = `
+  @keyframes rayFade {
+    0% { transform: rotate(var(--angle)) scale(0); opacity: 1; }
+    100% { transform: rotate(var(--angle)) scale(1); opacity: 0; }
+  }
+`
+document.head.appendChild(style)
 
 // Click effect
 document.addEventListener("mousedown", () => {
