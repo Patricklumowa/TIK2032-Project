@@ -65,18 +65,20 @@ function animateCursor() {
 animateCursor()
 
 // Add hover effect for interactive elements
-const interactiveElements = document.querySelectorAll("a, button, input, textarea, .gallery-item")
+const interactiveElements = document.querySelectorAll("a, button, input, textarea, .gallery-item, .progress-dot")
 
 interactiveElements.forEach((el) => {
   el.addEventListener("mouseenter", () => {
-    cursorOutline.style.transform = "translate(-50%, -50%) scale(1.5)"
+    cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(1.5)`
     cursorOutline.style.borderColor = "var(--secondary-color)"
+    cursorOutline.style.boxShadow = "var(--neon-glow-purple)"
     cursorDot.style.opacity = "0.5"
   })
 
   el.addEventListener("mouseleave", () => {
-    cursorOutline.style.transform = "translate(-50%, -50%) scale(1)"
+    cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(1)`
     cursorOutline.style.borderColor = "var(--primary-color)"
+    cursorOutline.style.boxShadow = "var(--neon-glow)"
     cursorDot.style.opacity = "1"
   })
 })
@@ -105,17 +107,85 @@ document.addEventListener("mouseup", () => {
   cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) scale(1)`
 })
 
-// Smooth scrolling for navigation links
-document.querySelectorAll("nav a").forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
+// Scroll handling for sections
+const sections = document.querySelectorAll(".section")
+const navLinks = document.querySelectorAll(".nav-links a")
+const progressDots = document.querySelectorAll(".progress-dot")
+const scrollContainer = document.querySelector(".scroll-container")
+
+// Function to update active section
+function updateActiveSection() {
+  const scrollPosition = scrollContainer.scrollTop
+  const windowHeight = window.innerHeight
+
+  sections.forEach((section, index) => {
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+
+    // Check if the section is in view
+    if (
+      scrollPosition >= sectionTop - windowHeight / 3 &&
+      scrollPosition < sectionTop + sectionHeight - windowHeight / 3
+    ) {
+      // Update section active state
+      sections.forEach((s) => s.classList.remove("active"))
+      section.classList.add("active")
+
+      // Update navigation active state
+      navLinks.forEach((link) => link.classList.remove("active"))
+      navLinks[index].classList.add("active")
+
+      // Update progress dots
+      progressDots.forEach((dot) => dot.classList.remove("active"))
+      progressDots[index].classList.add("active")
+    }
+  })
+}
+
+// Add scroll event listener
+scrollContainer.addEventListener("scroll", updateActiveSection)
+
+// Add click event listeners to navigation links
+navLinks.forEach((link) => {
+  link.addEventListener("click", function (e) {
     e.preventDefault()
-
     const targetId = this.getAttribute("href")
-    const targetElement = document.querySelector(targetId)
+    const targetSection = document.querySelector(targetId)
 
-    window.scrollTo({
-      top: targetElement.offsetTop - 80,
+    scrollContainer.scrollTo({
+      top: targetSection.offsetTop,
       behavior: "smooth",
     })
   })
 })
+
+// Add click event listeners to progress dots
+progressDots.forEach((dot) => {
+  dot.addEventListener("click", function () {
+    const targetId = this.getAttribute("data-section")
+    const targetSection = document.getElementById(targetId)
+
+    scrollContainer.scrollTo({
+      top: targetSection.offsetTop,
+      behavior: "smooth",
+    })
+  })
+})
+
+// Initialize the page
+updateActiveSection()
+
+// Add animation to elements when they come into view
+const animateOnScroll = () => {
+  const elements = document.querySelectorAll(".section.active .content-wrapper")
+
+  elements.forEach((element) => {
+    element.classList.add("fade-in")
+  })
+}
+
+// Call animation on scroll
+scrollContainer.addEventListener("scroll", animateOnScroll)
+
+// Initial animation
+setTimeout(animateOnScroll, 100)
