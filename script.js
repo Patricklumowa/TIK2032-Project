@@ -94,6 +94,24 @@ document.addEventListener("mouseover", () => {
   cursorStar.style.opacity = "1"
 })
 
+// Bullet hit effect on click
+document.addEventListener("click", (e) => {
+  // Check if the click is on a blank space (not on interactive elements)
+  if (!e.target.closest("a, button, input, textarea, .gallery-item, .progress-dot, .nav-links, .logo")) {
+    // Create bullet hit element
+    const bulletHit = document.createElement("div")
+    bulletHit.classList.add("bullet-hit")
+    bulletHit.style.left = `${e.clientX}px`
+    bulletHit.style.top = `${e.clientY}px`
+    document.body.appendChild(bulletHit)
+
+    // Remove the element after animation completes
+    setTimeout(() => {
+      bulletHit.remove()
+    }, 500)
+  }
+})
+
 // Click effect
 document.addEventListener("mousedown", () => {
   cursorCrosshair.style.transform = `translate(${crosshairX}px, ${crosshairY}px) scale(0.7)`
